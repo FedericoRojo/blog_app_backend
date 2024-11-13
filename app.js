@@ -14,9 +14,7 @@ app.use(express.urlencoded({extended: true}));
 require('./config/passport')(passport);
 app.use(passport.initialize());
 
-app.use(cors({
-  origin: process.env.FRONTEND_DOMAIN
-}));
+app.use(cors());
 
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
