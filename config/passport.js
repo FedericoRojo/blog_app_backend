@@ -3,7 +3,6 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const fs = require("fs");
 const path = require("path");
 const pool = require('./pool');
-const { error } = require("console");
 
 const pathToKey = path.join(__dirname, "..", "id_rsa_pub.pem");
 
@@ -18,15 +17,13 @@ const options = {
 
 module.exports = async (passport) => {
   passport.use(
-    new JwtStrategy(options, async function (jwt_payload, done) {  
+    new JwtStrategy(options, async function (jwt_payload, done) {
       try{
-        await pool.query('SELECT * FROM users WHERE id = $1', jwt_payload.sub);
-        if (err) {
-          return done(err, false);
-        }
-        if (user) {
-          
-          return done(null, user);
+        
+        const {rows} = await pool.query('SELECT * FROM users WHERE id = $1', [jwt_payload.sub]);
+        
+        if (rows[0]) {
+          return done(null, rows[0]);
         } else {
           return done(null, false);
         }

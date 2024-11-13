@@ -1,8 +1,6 @@
 const {Client} = require("pg");
 require('dotenv').config();
 
-
-
 const SQL = `
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -13,6 +11,7 @@ CREATE TABLE users (
     hash TEXT NOT NULL,            -- Hash of the password
     salt TEXT NOT NULL             -- Salt used for hashing
 );
+
 
 CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
@@ -26,13 +25,12 @@ CREATE TABLE posts (
     description TEXT,
     timestamp_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     img TEXT,
+    public_id VARCHAR(255) NOT NULL,
+    resource_type VARCHAR(100),
     tag INTEGER,  
     published BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (tag) REFERENCES tags(id)
 );
-
-
-
 
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
@@ -52,6 +50,18 @@ CREATE TABLE likes (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
+
+CREATE TABLE personal_info (
+    id SERIAL PRIMARY KEY,
+    fullname VARCHAR(255) NOT NULL,
+    description TEXT,
+    img TEXT,
+    public_id VARCHAR(255) NOT NULL,
+    resource_type VARCHAR(100),
+    timestamp_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 `;
 
 async function main(){
