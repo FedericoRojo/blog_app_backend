@@ -10,6 +10,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+async function prueba(req, res){
+    return res.json({
+        success: true,
+        response: 'aca llega'
+    })
+}
+
 async function getCountPosts(req, res){
     try{
         const totalCountResult = await pool.query('SELECT COUNT(*) FROM posts WHERE published = true;');
@@ -541,6 +548,6 @@ module.exports = {
     getUserComments,
     getUserLikes,
     getSomePostsAdmin,
-   
+    prueba
 }
 

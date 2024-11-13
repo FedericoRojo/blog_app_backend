@@ -16,6 +16,7 @@ app.use(passport.initialize());
 
 app.use(cors());
 
+
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
 

@@ -6,6 +6,8 @@ const {upload} = require('./multerConfig.js');
 
 const postRouter = Router();
 
+postRouter.get('/prueba', postController.prueba);
+
 postRouter.get('/', postController.getSomePosts);
 postRouter.get('/search/:tagId', postController.getPostsByTagId);
 postRouter.get('/getCount', postController.getCountPosts);
